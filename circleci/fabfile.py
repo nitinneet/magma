@@ -10,6 +10,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+import os
 import re
 import sys
 from time import sleep
@@ -208,16 +209,18 @@ def _checkout_code(repo: str, branch: str, sha1: str, tag: str, pr_num: str,
 def _run_remote_lte_integ_test(repo: str, magma_root: str):
     repo_name = _get_repo_name(repo)
     with cd(f'{repo_name}/{magma_root}/lte/gateway'):
-        test_result = run('fab integ_test', timeout=180*60, warn_only=True)
+        test_result = run('fab integ_test', timeout=180 * 60, warn_only=True)
 
         # Transfer test summaries into current directory
         run('fab get_test_summaries:dst_path="test-results"', warn_only=True)
         # Copy from node
         local('mkdir -p test-results')
-        get('test-results', 'test-results', warn_only=True)
+        with settings(warn_only=True):
+            get('test-results', 'test-results')
         # Copy to the directory CircleCI expects
         local('sudo mkdir -p /tmp/test-results/')
-        local('sudo mv test-results/* /tmp/test-results/', warn_only=True)
+        if len(os.listdir('test-results')):
+            local('sudo mv test-results/* /tmp/test-results/')
 
         # On failure, transfer logs from all 3 VMs and copy to the log
         # directory. This will get stored as an artifact in the CircleCI
