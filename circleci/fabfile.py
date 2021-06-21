@@ -214,10 +214,10 @@ def _run_remote_lte_integ_test(repo: str, magma_root: str):
         run('fab get_test_summaries:dst_path="test-results"', warn_only=True)
         # Copy from node
         local('mkdir -p test-results')
-        get('test-results', 'test-results')
+        get('test-results', 'test-results', warn_only=True)
         # Copy to the directory CircleCI expects
         local('sudo mkdir -p /tmp/test-results/')
-        local('sudo mv test-results/* /tmp/test-results/')
+        local('sudo mv test-results/* /tmp/test-results/', warn_only=True)
 
         # On failure, transfer logs from all 3 VMs and copy to the log
         # directory. This will get stored as an artifact in the CircleCI
