@@ -98,12 +98,11 @@ uint8_t NAS5GPktSnapShot::security_mode_reject[4] = {0x7e, 0x00, 0x5f, 0x24};
 class AmfNas5GTest : public ::testing::Test {
  protected:
   NAS5GPktSnapShot* nas5g_pkt_snap;
-  RegistrationRequestMsg reg_request;
+  RegistrationRequestMsg reg_request = {};
   bool decode_res;
   virtual void SetUp() {
     nas5g_pkt_snap = new NAS5GPktSnapShot();
     decode_res     = false;
-    memset(&reg_request, 0, sizeof(RegistrationRequestMsg));
   }
   virtual void TearDown() { delete nas5g_pkt_snap; }
 };
