@@ -5160,11 +5160,11 @@ func (m *TrackingAreaIdentityList) GetTAC() string {
 	return ""
 }
 
-// ambr_t
+//ambr_t
 type Ambr struct {
 	BrUl uint64 `protobuf:"varint,1,opt,name=br_ul,json=brUl,proto3" json:"br_ul,omitempty"`
 	BrDl uint64 `protobuf:"varint,2,opt,name=br_dl,json=brDl,proto3" json:"br_dl,omitempty"`
-	// Unit (either bps or Kbps)
+	//Unit (either bps or Kbps)
 	BrUnit               Ambr_BitrateUnitsAMBR `protobuf:"varint,3,opt,name=br_unit,json=brUnit,proto3,enum=magma.lte.Ambr_BitrateUnitsAMBR" json:"br_unit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
